@@ -12,7 +12,6 @@ async function getDashboardData(url = '/data.json') {
 }
 
 // Creating a class for drawing cards. When an instance of a class is created, a card is created.
-
 class DashboardItem {
 
   //
@@ -31,6 +30,7 @@ class DashboardItem {
     // The method is launched when an instance is created, it immediately places the card in a container in html
     this._createMarkup();
   }
+
   // Method for creating markup:
   _createMarkup() {
     const {title, timeframes} = this.data;
@@ -75,19 +75,19 @@ document.addEventListener('DOMContentLoaded', () => {
   getDashboardData()
     .then(data => {
       
-      // After receiving the data, we create an array with card instances, a piece of data for the card gets into the instance, the markup is placed in html
+      // After receiving the data, create an array with card instances, a piece of data for the card gets into the instance, the markup is placed in html
       const activities = data.map(activity => new DashboardItem(activity));
 
-      // We collect an array with divs-display switches
+      // Collect an array with divs-display switches
       const selectors = document.querySelectorAll('.view-selector__item');
 
-      // We go through the array with switches and hang events on each
+      // Go through the array with switches and hang events on each
       selectors.forEach(selector => selector.addEventListener('click', (e) => {
         // When the event fires, we remove the activity class for everyone, and hang the activity class on the div where the event fired
         selectors.forEach(sel => sel.classList.remove('view-selector__item--active'));
         selector.classList.add('view-selector__item--active');
 
-        // We take the text from the radio button and use it to change the display of all cards
+        // Take the text from the radio button and use it to change the display of all cards
         const currentView = selector.innerText.trim();
         activities.forEach(activity => activity.changeView(currentView));
       }));   
